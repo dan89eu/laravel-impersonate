@@ -29,7 +29,7 @@ class ImpersonateController extends Controller
     public function take(Request $request, $id)
     {
         // Cannot impersonate yourself
-        if ($id == $request->user()->getKey()) {
+        if ($id == $this->manager->getUserID()) {
             abort(403);
         }
 
@@ -46,7 +46,9 @@ class ImpersonateController extends Controller
 
         if ($user_to_impersonate->canBeImpersonated()) {
             if ($this->manager->take($request->user(), $user_to_impersonate)) {
+
                 $takeRedirect = $this->manager->getTakeRedirectTo();
+
                 if ($takeRedirect !== 'back') {
                     return redirect()->to($takeRedirect);
                 }

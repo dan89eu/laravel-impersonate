@@ -4,6 +4,7 @@ namespace Lab404\Impersonate\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Lab404\Impersonate\Services\ImpersonateManager;
+use Lab404\Impersonate\Services\SentinelImpersonateManager;
 
 trait Impersonate
 {
@@ -37,7 +38,7 @@ trait Impersonate
      */
     public function impersonate(Model $user)
     {
-        return app(ImpersonateManager::class)->take($this, $user);
+        return app(SentinelImpersonateManager::class)->take($this, $user);
     }
 
     /**
@@ -48,7 +49,7 @@ trait Impersonate
      */
     public function isImpersonated()
     {
-        return app(ImpersonateManager::class)->isImpersonating();
+        return app(SentinelImpersonateManager::class)->isImpersonating();
     }
 
     /**
@@ -61,7 +62,7 @@ trait Impersonate
     {
         if ($this->isImpersonated())
         {
-            return app(ImpersonateManager::class)->leave();
+            return app(SentinelImpersonateManager::class)->leave();
         }
     }
 }

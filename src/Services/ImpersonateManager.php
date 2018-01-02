@@ -24,12 +24,15 @@ class ImpersonateManager
         $this->app = $app;
     }
 
+
+
     /**
      * @param   int $id
      * @return  Model
      */
     public function findUserById($id)
     {
+
         $model = $this->app['config']->get('auth.providers.users.model');
 
         $user = call_user_func([
